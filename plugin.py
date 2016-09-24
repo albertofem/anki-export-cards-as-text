@@ -475,7 +475,7 @@ class TextExporter(Exporter):
 		def encodeString(s):
 			js = s.replace("'", '"')
 			js = js.replace('"', '\"')
-			js = '"' + js + '"'
+			js = '"' + js.replace('"', "'") + '"'
 			return js		
 		json = "{"
 		# Fields
@@ -494,7 +494,7 @@ class TextExporter(Exporter):
 					fieldValue = encodeString(note.fields[0])
 			else:
 				fieldValue = encodeString(fValue)
-			json += fieldName + ': ' + fieldValue
+			json += fieldName + ': ' + fieldValue.replace("&lt;", "<").replace("&gt;", ">")
 			counter += 1
 		if mw.EXPORT.TAGS:
 			json += ', "Tags": ['
